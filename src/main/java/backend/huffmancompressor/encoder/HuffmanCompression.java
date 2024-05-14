@@ -1,19 +1,17 @@
 package backend.huffmancompressor.encoder;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import lombok.Getter;
+
 import java.util.*;
 
 public class HuffmanCompression {
 
-    private HashMap<Character, String> huffmanCodes = new HashMap<>();
-    private HashMap<Character, Integer> frequencyMap = new HashMap<>();
+    private @Getter HashMap<Character, String> huffmanCodes = new HashMap<>();
+    private @Getter HashMap<Character, Integer> frequencyMap = new HashMap<>();
     private PriorityQueue<Node> minHeap = new PriorityQueue<>(Comparator.comparingInt(Node::getF));
 
     private Node huffRoot = null;
     private final String text;
-
     public HuffmanCompression(String text) {
         this.text = text;
     }
@@ -27,22 +25,13 @@ public class HuffmanCompression {
         buildHuffmanTree();
     }
 
-    public HashMap<Character, Integer> getFrequencyMap() {
-        return frequencyMap;
-    }
-
     public Node getHuffmanTree() {
         return huffRoot;
-    }
-
-    public HashMap<Character, String> getHuffmanCodes() {
-        return huffmanCodes;
     }
 
     /**
      * Counts the frequencies of characters in the input text.
      *
-     * @param map empty frequency map
      */
     private void countCharacterFrequencies() {
         for (int i = 0; i < this.text.length(); i++) {
@@ -60,7 +49,6 @@ public class HuffmanCompression {
     /**
      * Builds the Huffman tree from character frequencies.
      *
-     * @param minHeap priority queue containing the characters
      */
     private void buildHuffmanTree() {
         while (this.minHeap.size() >= 2) {
@@ -68,6 +56,9 @@ public class HuffmanCompression {
             Node right = this.minHeap.poll();
             assert right != null;
             Node node = new Node(Character.MIN_VALUE, left.getF() + right.getF(), left, right);
+            // Assigning the parent node
+            left.setParent(node);
+            right.setParent(node);
             this.minHeap.add(node);
         }
         Node root = this.minHeap.poll();
@@ -99,7 +90,6 @@ public class HuffmanCompression {
     /**
      * Counts the total number of bits needed to represent the compressed file.
      *
-     * @param map frequency map
      * @return total length of the bits
      */
     private char[] countTotalBits() {
@@ -114,8 +104,6 @@ public class HuffmanCompression {
     /**
      * Populates the priority queue with nodes from the character frequencies map.
      *
-     * @param map     frequency map
-     * @param minHeap priority queue to be populated
      */
     private void populatePriorityQueue() {
         frequencyMap.forEach((key, value) -> this.minHeap.add(new Node(key, value)));
