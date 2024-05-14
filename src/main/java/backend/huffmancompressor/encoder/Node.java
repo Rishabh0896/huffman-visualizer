@@ -1,5 +1,8 @@
 package backend.huffmancompressor.encoder;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
@@ -7,12 +10,13 @@ import java.io.Serializable;
  * Each node contains a character (c), its frequency (f), references to its left and right children,
  * and a StringBuilder to store the Huffman code associated with the character.
  */
+@Getter
 public class Node implements Serializable {
     private char c;                 // The character stored in this node
     private int f;                  // The frequency of the character
     private Node left;              // Reference to the left child node
     private Node right;             // Reference to the right child node
-    // Stores the Huffman code associated with the character
+    private @Setter Node parent;    // Reference to the parent node (used in visualizer to account for tree size)
 
     /**
      * Constructs a Node with a character and its frequency.
@@ -43,26 +47,6 @@ public class Node implements Serializable {
 
     }
 
-    // Getter and Setter methods for private fields
-
-    public char getC() {
-        return c;
-    }
-
-    public int getF() {
-        return f;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public Node getRight() {
-        return right;
-    }
-
-    // Override equals and hashCode methods for object comparison
-
     // Method to jsonify the tree
     public String toJson() {
         StringBuilder json = new StringBuilder();
@@ -79,6 +63,7 @@ public class Node implements Serializable {
         return json.toString();
     }
 
+    // Override equals and hashCode methods for object comparison
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
