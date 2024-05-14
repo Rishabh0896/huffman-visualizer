@@ -35,3 +35,28 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+## React ##
+
+# dependencies
+app/node_modules
+.pnp
+.pnp.js
+
+# testing
+app/coverage
+
+# production
+app/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
