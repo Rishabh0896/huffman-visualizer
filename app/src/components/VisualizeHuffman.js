@@ -23,7 +23,7 @@ function zoomFit(root, isOnlyRoot) {
 
 function visualizeHuffman(data) {
   // Get the svg element and the height/width of it 
-  const svg = select('svg');
+  const svg = select('#huffman-code-tree');
   const svgWidth = svg.node().getBoundingClientRect().width;
 
   // Clear the current svg content
@@ -158,12 +158,12 @@ function visualizeHuffman(data) {
   
   var leafIdCounter = 0
   nodeText.append('text').classed('label', true)
-    .attr('id', (d, i) => d.data.name !== null ? `leaf-node-${leafIdCounter++}` : '')
+    .attr('id', (d, i) => d.data.c !== null ? `leaf-node-${leafIdCounter++}` : '')
     .style('fill', 'gray')
     .attr('x', (d) => d.x)
     .attr('y', (d) => d.y+5) // Change the position of the text in the nodes
     .attr('text-anchor', 'middle')
-    .text((d) => (d.data.name === null ? d.data.count === 0 ? `'NYT'` : d.data.count : `'${d.data.name}' | ${d.data.count}`))
+    .text((d) => (d.data.c === null ? d.data.f === 0 ? `'NYT'` : d.data.f : `'${d.data.c}' | ${d.data.f}`))
     .style("fill-opacity", 1e-6);
 
   // Adding transition for nodes

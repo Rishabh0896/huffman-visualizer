@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+
 import {Button, Flex, Layout} from 'antd';
 import { Input } from 'antd';
 import { Typography } from 'antd';
 import {getHuffmanAssets} from "../services/api";
+import visualizeHuffman from "./VisualizeHuffman";
+import HuffmanCodeTree from "./HuffmanCodeTree";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -16,13 +19,17 @@ function Content() {
 	};
 
 	const handleClick = () => {
+		console.log("Text before sending:", text);
 		getHuffmanAssets(text).then((response) => {
+			console.log(response)
 			response.json().then((data) => {
 				// this data contains frequency map, huffman codes, and tree as json
 				console.log(data)
+				visualizeHuffman(data.huffRoot)
 			})
 		})
 	}
+
 
 
 	return (
@@ -41,7 +48,7 @@ function Content() {
 
 			</Layout.Content>
 			<Layout.Content style={rightPanelStyle}>
-				VIZ PANEL HERE
+				 <HuffmanCodeTree />
 			</Layout.Content>
 
 		</Layout.Content>
