@@ -158,7 +158,7 @@ function visualizeHuffman(data) {
   
   var leafIdCounter = 0
   nodeText.append('text').classed('label', true)
-    .attr('id', (d, i) => d.data.c !== null ? `leaf-node-${leafIdCounter++}` : '')
+    .attr('id', (d) => d.data.c !== null ? `leaf-node-${leafIdCounter++}` : '')
     .style('fill', 'gray')
     .attr('x', (d) => d.x)
     .attr('y', (d) => d.y+5) // Change the position of the text in the nodes

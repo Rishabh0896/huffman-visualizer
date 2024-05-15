@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The Node class represents a node used in Huffman coding.
@@ -51,10 +50,6 @@ public class Node implements Serializable {
             this.children.add(right);
     }
 
-    public Node() {
-
-    }
-
     // Override equals and hashCode methods for object comparison
     @Override
     public boolean equals(Object o) {
@@ -76,7 +71,7 @@ public class Node implements Serializable {
 
     @Override
     public String toString() {
-        ArrayList<Node> children = new ArrayList<Node>(2);
+        ArrayList<Node> children = new ArrayList<>(2);
         children.add(left);
         children.add(right);
         return "Node{" +
