@@ -10,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class HuffmanCompressorController {
     @PostMapping("/compress")
-    public ResponseEntity<CompressResponseDTO> getTableData(@RequestBody String text) {
+    public ResponseEntity<CompressResponseDTO> compressText(@RequestBody String text) {
         HuffmanCompression compressor = new HuffmanCompression(text);
         compressor.compress();
 
         CompressResponseDTO responseDTO = new CompressResponseDTO(compressor.getHuffmanTree(), compressor.getHuffmanCodes(), compressor.getFrequencyMap());
-
         return ResponseEntity.ok(responseDTO);
     }
 }

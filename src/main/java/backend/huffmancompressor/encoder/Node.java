@@ -4,19 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The Node class represents a node used in Huffman coding.
  * Each node contains a character (c), its frequency (f), references to its left and right children,
  * and a StringBuilder to store the Huffman code associated with the character.
  */
-@Getter
+@Getter @Setter
 public class Node implements Serializable {
     private char c;                 // The character stored in this node
     private int f;                  // The frequency of the character
     private Node left;              // Reference to the left child node
     private Node right;             // Reference to the right child node
-    private @Setter Node parent;    // Reference to the parent node (used in visualizer to account for tree size)
+    private Node parent;    // Reference to the parent node (used in visualizer to account for tree size)
+    private ArrayList<Node> children;
 
     /**
      * Constructs a Node with a character and its frequency.
@@ -41,26 +44,15 @@ public class Node implements Serializable {
         this.f = f;
         this.left = left;
         this.right = right;
+        this.children = new ArrayList<>(2);
+        if (left != null)
+            this.children.add(left);
+        if (right != null)
+            this.children.add(right);
     }
 
     public Node() {
 
-    }
-
-    // Method to jsonify the tree
-    public String toJson() {
-        StringBuilder json = new StringBuilder();
-        json.append("{");
-        json.append("\"character\": \"" + this.c + "\",");
-        json.append("\"frequency\": " + this.f);
-        if (this.left != null) {
-            json.append(",\"left\": " + this.left.toJson());
-        }
-        if (this.right != null) {
-            json.append(",\"right\": " + this.right.toJson());
-        }
-        json.append("}");
-        return json.toString();
     }
 
     // Override equals and hashCode methods for object comparison
@@ -80,5 +72,20 @@ public class Node implements Serializable {
         int result = c;
         result = 31 * result + f;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<Node> children = new ArrayList<Node>(2);
+        children.add(left);
+        children.add(right);
+        return "Node{" +
+                "character=" + c +
+                ", frequency=" + f +
+                ", children =" + children +
+                ", leftChild=" + left +
+                ", rightChild=" + right +
+                ", parent=" + parent +
+                '}';
     }
 }

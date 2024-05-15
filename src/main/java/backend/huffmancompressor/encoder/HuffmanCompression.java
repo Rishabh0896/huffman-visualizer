@@ -56,9 +56,6 @@ public class HuffmanCompression {
             Node right = this.minHeap.poll();
             assert right != null;
             Node node = new Node(Character.MIN_VALUE, left.getF() + right.getF(), left, right);
-            // Assigning the parent node
-            left.setParent(node);
-            right.setParent(node);
             this.minHeap.add(node);
         }
         Node root = this.minHeap.poll();
